@@ -9,6 +9,7 @@ import (
 func TestAiConfig(t *testing.T) {
 	t.Run("GetKey", testGetKey)
 	t.Run("GetProxy", testGetProxy)
+	t.Run("GetBaseUrl", testGetBaseUrl)
 	t.Run("GetTemperature", testGetTemperature)
 	t.Run("GetMaxTokens", testGetMaxTokens)
 }
@@ -29,6 +30,13 @@ func testGetProxy(t *testing.T) {
 	actualProxy := aiConfig.GetProxy()
 
 	assert.Equal(t, expectedProxy, actualProxy, "The two proxies should be the same.")
+}
+
+func testGetBaseUrl(t *testing.T) {
+	expectedBaseUrl := "test_base_url"
+	aiConfig := AiConfig{baseUrl: expectedBaseUrl}
+	actualBaseUrl := aiConfig.GetBaseUrl()
+	assert.Equal(t, expectedBaseUrl, actualBaseUrl, "The two baseUrls should be the same.")
 }
 
 func testGetTemperature(t *testing.T) {

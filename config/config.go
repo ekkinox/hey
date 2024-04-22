@@ -43,6 +43,7 @@ func NewConfig() (*Config, error) {
 			key:         viper.GetString(openai_key),
 			model:       viper.GetString(openai_model),
 			proxy:       viper.GetString(openai_proxy),
+			baseUrl:     viper.GetString(openai_base_url),
 			temperature: viper.GetFloat64(openai_temperature),
 			maxTokens:   viper.GetInt(openai_max_tokens),
 		},
@@ -61,6 +62,7 @@ func WriteConfig(key string, write bool) (*Config, error) {
 	viper.Set(openai_key, key)
 	viper.Set(openai_model, openai.GPT3Dot5Turbo)
 	viper.SetDefault(openai_proxy, "")
+	viper.SetDefault(openai_base_url, "")
 	viper.SetDefault(openai_temperature, 0.2)
 	viper.SetDefault(openai_max_tokens, 1000)
 

@@ -31,12 +31,9 @@ type Engine struct {
 }
 
 func NewEngine(mode EngineMode, config *config.Config) (*Engine, error) {
-	var client *openai.Client
+	clientConfig := openai.DefaultConfig(config.GetAiConfig().GetKey())
 
 	if config.GetAiConfig().GetProxy() != "" {
-
-		clientConfig := openai.DefaultConfig(config.GetAiConfig().GetKey())
-
 		proxyUrl, err := url.Parse(config.GetAiConfig().GetProxy())
 		if err != nil {
 			return nil, err
@@ -49,12 +46,13 @@ func NewEngine(mode EngineMode, config *config.Config) (*Engine, error) {
 		clientConfig.HTTPClient = &http.Client{
 			Transport: transport,
 		}
-
-		client = openai.NewClientWithConfig(clientConfig)
-	} else {
-		client = openai.NewClient(config.GetAiConfig().GetKey())
 	}
 
+	if config.GetAiConfig().GetBaseUrl() != "" {
+		clientConfig.BaseURL = config.GetAiConfig().GetBaseUrl()
+	}
+	
+	client := openai.NewClientWithConfig(clientConfig)
 	return &Engine{
 		mode:         mode,
 		config:       config,
