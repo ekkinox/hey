@@ -41,7 +41,7 @@ func NewEngine(mode EngineMode, config *config.Config) (*Engine, error) {
 			return nil, err
 		}
 
-		clientConfig.BaseURL = proxyUrl.Scheme + "://" + proxyUrl.Host + "/v1"
+		clientConfig.BaseURL = proxyUrl.Scheme + "://" + proxyUrl.Host + proxyUrl.Path
 		// transport := &http.Transport{
 		// 	Proxy: http.ProxyURL(proxyUrl),
 		// }
